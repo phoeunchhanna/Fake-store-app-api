@@ -40,6 +40,8 @@ export default function Navbar() {
           <a href="#services" className="nav-link">Services</a>
           <a href="#pricing" className="nav-link">Pricing</a>
           <a href="#contact" className="nav-link">Contact</a>
+          <a href="/checkout" className="checkout-link">Checkout</a>
+
         </nav>
 
         {/* RIGHT: CART + PROFILE */}
@@ -69,10 +71,17 @@ export default function Navbar() {
                 </ul>
               )}
               {cart.length > 0 && (
-                <button className="clear-btn" onClick={clearCart}>
-                  Clear Cart
-                </button>
+                <>
+                 
+                  <a href="/checkout" className="checkout-btn">
+                    Go Checkout
+                  </a>
+                  <button className="clear-btn" onClick={clearCart}>
+                    Clear Cart
+                  </button>
+                </>
               )}
+
             </div>
           )}
 

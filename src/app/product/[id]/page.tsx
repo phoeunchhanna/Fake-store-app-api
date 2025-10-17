@@ -87,7 +87,8 @@ export default async function ProductPage({ params }) {
               </div>
             </div>
 
-            <button className="add-cart-btn">Add to Cart</button>
+            <button className="add-cart-btn" >
+              Add to Cart</button>
           </div>
         </div>
       </div>

@@ -32,7 +32,10 @@ export default function ProductGrid({ products, handleAddCart }: ProductGridProp
           </div>
 
           <div className="product-info">
-            <h3>{p.title}</h3>
+            <div className="title">
+               <h3>{p.title}</h3>
+            </div>
+           
             <div className="rating">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star

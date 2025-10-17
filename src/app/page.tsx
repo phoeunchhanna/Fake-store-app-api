@@ -5,6 +5,7 @@ import ProductShowcase from "./components/product_show";
 import ProductGrid from "./components/products_grid";
 import WhyChooseUs from "./components/why_choose_us";
 import Banner from "./components/banner";
+import { useCart } from "./context/cart_context"; // ✅ import
 
 type Product = {
   id: number;
@@ -20,6 +21,8 @@ export default function Home() {
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+  const { addToCart } = useCart(); // ✅ get from context
+
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
@@ -30,23 +33,19 @@ export default function Home() {
       });
   }, []);
 
+  // ✅ call context function
   const handleAddCart = (product: Product) => {
-    console.log("Added to cart:", product);
+    addToCart(product);
   };
 
-  // Filter by category
   const filteredProducts = selectedCategory
     ? products.filter((p) => p.category === selectedCategory)
     : products;
 
   return (
     <>
-      {/* banner  */}
       <Banner />
-
-      {/* PRODUCT GRID */}
       <div className="container">
-        {/* CATEGORY FILTER */}
         <div className="container category-bar">
           <select
             id="category"
@@ -63,11 +62,7 @@ export default function Home() {
         </div>
         <ProductGrid products={filteredProducts} handleAddCart={handleAddCart} />
       </div>
-
-      {/* Product show case */}
       <ProductShowcase />
-
-      {/* WHY CHOOSE US */}
       <WhyChooseUs />
     </>
   );
