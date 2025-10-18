@@ -1,4 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<img width="1889" height="952" alt="image" src="https://github.com/user-attachments/assets/cb549d6d-80be-41f5-88b0-68a8e3095610" />This is a [Next.js](https://nextjs.org) project  with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+*Project Overview*
+<img width="1889" height="952" alt="image" src="https://github.com/user-attachments/assets/52522397-12c1-473a-bf18-0b14fba5c2e2" />
+<img width="1890" height="955" alt="image" src="https://github.com/user-attachments/assets/af81fd2e-14c5-48ca-821b-609a19bef789" />
+<img width="1882" height="952" alt="image" src="https://github.com/user-attachments/assets/0db9e2a4-ee14-4ef7-8c6d-8c5a2149de19" />
+<img width="1886" height="951" alt="image" src="https://github.com/user-attachments/assets/a0cd3902-32c4-4e9b-a7ee-42d440e2bb54" />
+<img width="1886" height="950" alt="image" src="https://github.com/user-attachments/assets/e7f13919-3bc3-4371-998b-a3d449b926fe" />
+<img width="1894" height="951" alt="image" src="https://github.com/user-attachments/assets/0df7454a-6817-4ab5-bf20-5f1f555eb50d" />
+<img width="1886" height="953" alt="image" src="https://github.com/user-attachments/assets/2c53c7a2-387b-4062-90af-c5a9d3167e08" />
+<img width="1890" height="952" alt="image" src="https://github.com/user-attachments/assets/127ced0d-62ae-475b-84a8-d9ae1944bdd8" />
+<img width="531" height="1006" alt="image" src="https://github.com/user-attachments/assets/4898f232-07d5-4fbf-8af8-c35f02efc796" />
+<img width="1887" height="950" alt="image" src="https://github.com/user-attachments/assets/6d1c7add-82a7-4ffb-95a6-75fc0435a056" />
+<img width="1604" height="763" alt="image" src="https://github.com/user-attachments/assets/e11ef2df-7a7d-400a-8456-a4e564eb2293" />
+<img width="1891" height="951" alt="image" src="https://github.com/user-attachments/assets/a81d82f5-b213-46e4-801b-ecb1ce0b0d9d" />
+
+*Project 
+- Next Js 
+- Fake API 
+- Formspree
+- Telegram Bot  
+
+
+
+
 
 ## Getting Started
 
