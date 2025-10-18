@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Menu, X, User, LogOut, Settings, ShoppingCart } from "lucide-react";
@@ -36,11 +37,11 @@ export default function Navbar() {
         {/* CENTER NAV */}
         <nav className="nav-center">
           <a href="/" className="nav-link active">Home</a>
-          <a href="#about" className="nav-link">About</a>
-          <a href="#services" className="nav-link">Services</a>
-          <a href="#pricing" className="nav-link">Pricing</a>
-          <a href="#contact" className="nav-link">Contact</a>
-          <a href="/checkout" className="checkout-link">Checkout</a>
+          <a href="/about" className="nav-link">About</a>
+          <a href="/services" className="nav-link">Services</a>
+          <a href="/pricing" className="nav-link">Pricing</a>
+          <a href="/contact" className="nav-link">Contact</a>
+          <a href="/checkout" className="nav-link">Checkout</a>
 
         </nav>
 
@@ -97,7 +98,7 @@ export default function Navbar() {
 
             {profileOpen && (
               <div className="profile-dropdown">
-                <a href="#profile" className="dropdown-item"><User size={16} /> Profile</a>
+                <a href="/profile" className="dropdown-item"><User size={16} /> Profile</a>
                 <a href="#settings" className="dropdown-item"><Settings size={16} /> Settings</a>
                 <hr />
                 <a href="#logout" className="dropdown-item logout"><LogOut size={16} /> Logout</a>

@@ -125,6 +125,21 @@ body {
   color: #3b82f6;
 }
 
+.checkout-link{
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.checkout-link:hover {
+  color: #60a5fa;
+}
+
+.checkout-link.active {
+  color: #3b82f6;
+}
 /* RIGHT SIDE */
 .nav-right {
   display: flex;
@@ -1871,4 +1886,224 @@ body {
   font-size: 0.85rem;
   color: #16a34a;
   margin-top: 4px;
+}
+
+
+
+
+/* ================================================================
+   📞 CONTACT PAGE STYLING
+================================================================ */
+.contact-page {
+  max-width: 800px;
+  margin: 60px auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 50px 40px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  font-family: "Poppins", sans-serif;
+}
+
+.contact-page h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.contact-page p {
+  color: #475569;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form label {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 1rem;
+  color: #0f172a;
+  background: #f9fafb;
+  transition: all 0.25s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #2563eb;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(37, 99, 235, 0.2);
+}
+
+.contact-form textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+.contact-form button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.contact-form button:hover {
+  background-color: #1d4ed8;
+}
+
+.contact-form button:active {
+  transform: scale(0.98);
+}
+
+/* Subtle form glow on hover */
+.contact-page:hover {
+  box-shadow: 0 10px 35px rgba(37, 99, 235, 0.15);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .contact-page {
+    padding: 30px 20px;
+    margin: 30px 10px;
+  }
+
+  .contact-page h1 {
+    font-size: 1.7rem;
+  }
+}
+
+
+
+
+
+
+/* =========================================================
+   👤 PROFILE PAGE STYLING
+   ========================================================= */
+
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #f9fafb;
+  padding: 40px 20px;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.avatar-section {
+  margin-bottom: 25px;
+}
+
+.avatar-section .avatar {
+  border-radius: 50%;
+  border: 3px solid #2563eb;
+}
+
+.avatar-section h2 {
+  margin-top: 15px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.avatar-section .email {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+.info-section {
+  text-align: left;
+  margin-top: 30px;
+}
+
+.info-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1e40af;
+  border-bottom: 2px solid #2563eb;
+  padding-bottom: 4px;
+}
+
+.info-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-section li {
+  padding: 8px 0;
+  color: #374151;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
+
+.action-buttons button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: 0.3s ease;
+}
+
+.edit-btn {
+  background-color: #2563eb;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.logout-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
 }

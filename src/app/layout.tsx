@@ -6,6 +6,7 @@ import Navbar from "./components/header";
 import Footer from "./components/footer";
 import { CartProvider } from "./context/cart_context";
 
+
 export const metadata = {
   title: "Fake Store Demo",
   description: "Demo app using Fake Store API",

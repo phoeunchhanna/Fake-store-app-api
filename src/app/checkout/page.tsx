@@ -42,6 +42,7 @@ const sendToTelegram = async (message: string) => {
 };
 
 export default function CheckoutPage() {
+  
   const { cart, clearCart, removeFromCart, addToCart } = useCart();
   const [showPayment, setShowPayment] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("credit");

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.21",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.545.0",
     "next": "^15.5.3",
