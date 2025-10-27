@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../context/auth_context";
+import { AuthProvider, useAuth } from "../context/auth_context";
 
-export default function LoginPage() {
+function LoginForm() {
   const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,3 +48,15 @@ export default function LoginPage() {
     </div>
   );
 }
+
+// Wrap the form in AuthProvider to ensure useAuth works
+export default function LoginPage() {
+  return (
+    <AuthProvider>
+      <LoginForm />
+    </AuthProvider>
+  );
+}
+
+// Prevent Next.js from statically prerendering this page
+export const dynamic = 'force-dynamic';

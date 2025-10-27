@@ -36,7 +36,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // Load from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("cart");
-    if (saved) setCart(JSON.parse(saved));
+    if (saved) {
+      try {
+        const parsed: Product[] = JSON.parse(saved);
+        setCart(parsed);
+      } catch (err) {
+        console.error("Failed to parse cart from localStorage:", err);
+      }
+    }
   }, []);
 
   // Save to localStorage
@@ -46,10 +53,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   /** Add item to cart */
   const addToCart = (item: Product) => {
-    setCart((prev) => {
+    setCart((prev: Product[]) => {
       const existing = prev.find((p) => p.id === item.id);
       if (existing) {
-        return prev.map((p) =>
+        return prev.map((p: Product) =>
           p.id === item.id ? { ...p, quantity: (p.quantity ?? 1) + 1 } : p
         );
       }
@@ -59,7 +66,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   /** Remove item by id */
   const removeFromCart = (id: number) => {
-    setCart((prev) => prev.filter((p) => p.id !== id));
+    setCart((prev: Product[]) => prev.filter((p: Product) => p.id !== id));
   };
 
   /** Clear all cart */

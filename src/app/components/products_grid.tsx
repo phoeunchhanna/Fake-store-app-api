@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ShoppingCart, Info, Star, Eye, Heart } from "lucide-react";
 
 type Product = {
@@ -23,7 +24,14 @@ export default function ProductGrid({ products, handleAddCart }: ProductGridProp
       {products.map((p) => (
         <div key={p.id} className="product-card">
           <div className="product-img">
-            <img src={p.image} alt={p.title} />
+            <Image
+              src={p.image}
+              alt={p.title}
+              width={300}     // adjust width
+              height={300}    // adjust height
+              className="product-image"
+              priority={true} // optional, only for LCP images
+            />
             <span className="badge">Up to 20% off</span>
             <div className="icons">
               <Eye className="icon" />
@@ -33,9 +41,9 @@ export default function ProductGrid({ products, handleAddCart }: ProductGridProp
 
           <div className="product-info">
             <div className="title">
-               <h3>{p.title}</h3>
+              <h3>{p.title}</h3>
             </div>
-           
+
             <div className="rating">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star
@@ -45,6 +53,7 @@ export default function ProductGrid({ products, handleAddCart }: ProductGridProp
               ))}
               <span className="count">({p.rating?.count ?? 0})</span>
             </div>
+
             <p className="category">{p.category}</p>
             <p className="price">${p.price}</p>
           </div>

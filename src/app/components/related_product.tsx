@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ShoppingCart, Info, Star, Eye, Heart } from "lucide-react";
 
 type Product = {
@@ -38,7 +39,13 @@ export default function RelatedProduct({ category }: { category: string }) {
       {products.map((p) => (
         <div key={p.id} className="product-card">
           <div className="product-img">
-            <img src={p.image} alt={p.title} />
+            <Image
+              src={p.image}
+              alt={p.title}
+              width={200}   // adjust to your design
+              height={200}  // adjust to your design
+              className="product-image"
+            />
             <span className="badge">Up to 20% off</span>
             <div className="icons">
               <Eye className="icon" />

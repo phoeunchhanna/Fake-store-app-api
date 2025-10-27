@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "./components/header";
 import Footer from "./components/footer";
 import { CartProvider } from "./context/cart_context";
+import { AuthProvider } from "./context/auth_context";
 
 
 export const metadata = {
@@ -22,9 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
 
           {/* MAIN CONTENT */}
-          <main className="site-main">
-            <div className="container">{children}</div>
-          </main>
+          <AuthProvider>{children}</AuthProvider>
 
           {/* FOOTER */}
           <Footer />

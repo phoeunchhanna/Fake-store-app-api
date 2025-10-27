@@ -12,41 +12,81 @@ import {
   Smartphone,
   MapPin,
   Phone,
-  Clock,
+
 } from "lucide-react";
+import type { Product } from "../context/cart_context"; // ✅ Import Product type
 
-// Function to send the order to Telegram bot
-const sendToTelegram = async (message: string) => {
-  const token = '7641186781:AAF91RpqmCMsSt-bSUqeYxEi4XnOGVG9WCA';
-  const chatId = '5652292237'; // Replace with your chat ID or group ID
-  const url = `https://api.telegram.org/bot${token}/sendMessage`;
+// ⚠️ SECURITY WARNING:
+// Move this to a Next.js API route in production (e.g. /api/sendTelegram)
+const TELEGRAM_TOKEN = "YOUR_BOT_TOKEN";
+const TELEGRAM_CHAT_ID = "YOUR_CHAT_ID";
 
-  const body = JSON.stringify({
-    chat_id: chatId,
-    text: message,
-  });
+/** Sends formatted message to Telegram bot */
+async function sendToTelegram(message: string): Promise<void> {
+  try {
+    const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+    const body = JSON.stringify({
+      chat_id: TELEGRAM_CHAT_ID,
+      text: message,
+      parse_mode: "Markdown",
+    });
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+    });
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
-
-  if (response.ok) {
-    console.log('Message sent successfully');
-  } else {
-    console.error('Failed to send message');
+    if (!response.ok) {
+      console.error("❌ Failed to send Telegram message");
+    }
+  } catch (error) {
+    console.error("❌ Telegram Error:", error);
   }
-};
+}
+/** Formats order details for Telegram */
+function formatOrderMessage(
+  cart: Product[],
+  userInfo: { name: string; phone: string; address: string },
+  subtotal: number,
+  paymentMethod: string
+): string {
+  const productList = cart
+    .map(
+      (item) =>
+        `📦 ${item.title} x${item.quantity ?? 1} - $${(
+          item.price * (item.quantity ?? 1)
+        ).toFixed(2)}`
+    )
+    .join("\n");
 
+  return `
+🛒 *New Order Received*
+*Name:* ${userInfo.name}
+*Phone:* ${userInfo.phone}
+*Address:* ${userInfo.address}
+
+-------------------------------------
+${
+  paymentMethod === "credit"
+    ? "💳 *Payment:* Credit / Debit Card"
+    : paymentMethod === "aba"
+    ? "📱 *Payment:* ABA Pay"
+    : "💵 *Payment:* Cash on Delivery"
+}
+-------------------------------------
+*Products:*
+${productList}
+
+-------------------------------------
+
+💵 *Subtotal:* $${subtotal.toFixed(2)}
+`;
+}
 export default function CheckoutPage() {
-  
   const { cart, clearCart, removeFromCart, addToCart } = useCart();
   const [showPayment, setShowPayment] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("credit");
-  const [userInfo, setUserInfo] = useState<{ name: string; phone: string; address: string }>({
+  const [userInfo, setUserInfo] = useState({
     name: "",
     phone: "",
     address: "",
@@ -56,91 +96,28 @@ export default function CheckoutPage() {
     (sum, item) => sum + item.price * (item.quantity ?? 1),
     0
   );
+  /** Proceed to payment view */
+  const handleCheckout = () => setShowPayment(true);
 
-  const handleCheckout = () => {
-    setShowPayment(true);
-  };
-
-  const sendToTelegram = async (message: string) => {
-    const token = '7641186781:AAF91RpqmCMsSt-bSUqeYxEi4XnOGVG9WCA';
-    const chatId = '5652292237'; // Replace with your chat ID or group ID
-    const url = `https://api.telegram.org/bot${token}/sendMessage`;
-
-    const body = JSON.stringify({
-      chat_id: chatId,
-      text: message,
-      parse_mode: 'Markdown', // To support bold, italics, etc.
-    });
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body,
-    });
-
-    if (response.ok) {
-      console.log('Message sent successfully');
-    } else {
-      console.error('Failed to send message');
-    }
-  };
-
-  // Format the order details for sending
- const formatOrderMessage = (cart, userInfo, subtotal, paymentMethod) => {
-  const productList = cart.map((item) => {
-    const icon = "📦"; // This icon represents products, you can change it based on category or type
-    return `${icon} ${item.title} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`;
-  }).join('\n');
-
-  const orderDetails = `
-  🛒 *New Order:*
-  *Name:* ${userInfo.name}
-  *Phone:* ${userInfo.phone}
-  *Address:* ${userInfo.address}
-  
-  -------------------------------------
-  
-  ${paymentMethod === "credit" ? "💳 *Payment Method:* Credit / Debit Card" : 
-  paymentMethod === "aba" ? "📱 *Payment Method:* ABA Pay" : "💵 *Payment Method:* Cash on Delivery"}
-
-  -------------------------------------
-  
-  *Products:*
-  ${productList}
-  
-  -------------------------------------
-  
-  💵 *Subtotal:* $${subtotal.toFixed(2)}
-  `;
-
-  return orderDetails;
-};
-
-
-  // Example usage when submitting the order
-  const handlePaymentSubmit = (e: React.FormEvent) => {
+  /** Handle order submission */
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const orderDetails = formatOrderMessage(cart, userInfo, subtotal, paymentMethod);
-
-    // Send the formatted message to Telegram bot
-    sendToTelegram(orderDetails);
-
+    await sendToTelegram(orderDetails);
     alert(`✅ Payment successful via ${paymentMethod}!\nTotal: $${subtotal.toFixed(2)}`);
     clearCart();
     setShowPayment(false);
   };
-
-
+  /** Decrease quantity safely */
   const decreaseQuantity = (itemId: number) => {
-    const item = cart.find((p) => p.id === itemId);
-    if (item && item.quantity && item.quantity > 1) {
-      addToCart({ ...item, quantity: item.quantity - 1 });
-    }
+    const updated = cart.map((item) =>
+      item.id === itemId && (item.quantity ?? 1) > 1
+        ? { ...item, quantity: (item.quantity ?? 1) - 1 }
+        : item
+    );
+    localStorage.setItem("cart", JSON.stringify(updated));
+    window.location.reload(); // Simplest refresh to reflect new state (you can optimize this)
   };
-
   // ---------------- CART VIEW ----------------
   if (!showPayment) {
     return (
@@ -171,10 +148,7 @@ export default function CheckoutPage() {
 
                   <div className="cart-controls">
                     <div className="quantity-box">
-                      <button
-                        className="qty-btn"
-                        onClick={() => decreaseQuantity(item.id)}
-                      >
+                      <button className="qty-btn" onClick={() => decreaseQuantity(item.id)}>
                         <Minus size={14} />
                       </button>
                       <span>{item.quantity ?? 1}</span>
@@ -232,7 +206,7 @@ export default function CheckoutPage() {
     );
   }
 
-  // ---------------- PAYMENT FORM ----------------
+  // ---------------- PAYMENT VIEW ----------------
   return (
     <div className="payment-form">
       <h2>Choose Payment Method</h2>
@@ -273,84 +247,12 @@ export default function CheckoutPage() {
           </label>
         </div>
 
-        {paymentMethod === "cash" && (
-          <div className="cod-details">
-            <h3>Cash on Delivery (COD)</h3>
-            <p className="cod-desc">
-              Please fill in your delivery information carefully. Our courier will
-              contact you once your order is out for delivery.
-            </p>
-
-            {/* Address Form */}
-            <div className="cod-form">
-              <div className="form-group">
-                <label>
-                  <MapPin size={16} /> Delivery Address
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter your full address"
-                  required
-                  value={userInfo.address}
-                  onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>
-                  <Phone size={16} /> Contact Number
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. 081 234 5678"
-                  required
-                  value={userInfo.phone}
-                  onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Additional Note (Optional)</label>
-                <textarea placeholder="Example: Please call before delivery or leave at reception." />
-              </div>
-            </div>
-
-            {/* Delivery Info */}
-            <div className="delivery-info">
-              <div className="info-item">
-                <Clock size={16} />
-                <p>
-                  <strong>Estimated Delivery:</strong> 2-4 business days
-                </p>
-              </div>
-              <div className="info-item">
-                <Image src="/fee.png" alt="delivery" width={30} height={20} />
-                <p>Free nationwide shipping for orders above $50</p>
-              </div>
-            </div>
-
-            {/* Payment Summary */}
-            <div className="cod-summary">
-              <div className="money-icon">💵</div>
-              <div>
-                <p>
-                  You will pay <strong>${subtotal.toFixed(2)}</strong> to our courier
-                  upon delivery.
-                </p>
-                <small>
-                  *Please prepare the exact amount or small change for a smooth
-                  handover.
-                </small>
-              </div>
-            </div>
-          </div>
-        )}
-
+        {/* ✅ Show proper payment fields per method */}
         {paymentMethod === "credit" && (
           <div className="card-fields">
             <input
               type="text"
-              placeholder="Full name"
+              placeholder="Full Name"
               required
               value={userInfo.name}
               onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
@@ -366,33 +268,53 @@ export default function CheckoutPage() {
 
         {paymentMethod === "aba" && (
           <div className="aba-info">
-            <div className="form-group">
-              <label>Full name</label>
-              <input
-                type="text"
-                placeholder="Full name"
-                required
-                value={userInfo.name}
-                onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Phone</label>
-              <input
-                type="text"
-                placeholder="Phone number"
-                required
-                value={userInfo.phone}
-                onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
-              />
-            </div>
-
+            <label>Full Name</label>
+            <input
+              type="text"
+              placeholder="Full name"
+              required
+              value={userInfo.name}
+              onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
+            />
+            <label>Phone</label>
+            <input
+              type="text"
+              placeholder="Phone number"
+              required
+              value={userInfo.phone}
+              onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+            />
             <p>
               Scan this QR code with your <strong>ABA Mobile App</strong> to
-              complete the payment.
+              complete payment.
             </p>
             <Image src="/QRcode.jpg" alt="ABA QR" width={160} height={160} />
+          </div>
+        )}
+
+        {paymentMethod === "cash" && (
+          <div className="cod-details">
+            <label>
+              <MapPin size={16} /> Delivery Address
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your full address"
+              required
+              value={userInfo.address}
+              onChange={(e) => setUserInfo({ ...userInfo, address: e.target.value })}
+            />
+
+            <label>
+              <Phone size={16} /> Contact Number
+            </label>
+            <input
+              type="text"
+              placeholder="e.g. 081 234 5678"
+              required
+              value={userInfo.phone}
+              onChange={(e) => setUserInfo({ ...userInfo, phone: e.target.value })}
+            />
           </div>
         )}
 

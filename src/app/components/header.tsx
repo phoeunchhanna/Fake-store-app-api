@@ -4,14 +4,14 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Menu, X, User, LogOut, Settings, ShoppingCart } from "lucide-react";
-import { useCart } from "../context/cart_context"; // ✅ import
+import { useCart } from "../context/cart_context";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
-  const { cart, removeFromCart, clearCart } = useCart(); // ✅ use global cart
+  const { cart, removeFromCart, clearCart } = useCart();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -34,15 +34,29 @@ export default function Navbar() {
           <h1 className="logo-text">Fake API Store</h1>
         </div>
 
-        {/* CENTER NAV */}
+        {/* CENTER NAVIGATION */}
         <nav className="nav-center">
-          <a href="/" className="nav-link active">Home</a>
-          <a href="/about" className="nav-link">About</a>
-          <a href="/services" className="nav-link">Services</a>
-          <a href="/pricing" className="nav-link">Pricing</a>
-          <a href="/contact" className="nav-link">Contact</a>
-          <a href="/checkout" className="nav-link">Checkout</a>
-
+          <Link href="/" className="nav-link active">
+            Home
+          </Link>
+          <Link href="/products" className="nav-link">
+            Products
+          </Link>
+          <Link href="/about" className="nav-link">
+            About
+          </Link>
+          <Link href="/services" className="nav-link">
+            Services
+          </Link>
+          <Link href="/pricing" className="nav-link">
+            Pricing
+          </Link>
+          <Link href="/contact" className="nav-link">
+            Contact
+          </Link>
+          <Link href="/checkout" className="nav-link">
+            Checkout
+          </Link>
         </nav>
 
         {/* RIGHT: CART + PROFILE */}
@@ -73,20 +87,18 @@ export default function Navbar() {
               )}
               {cart.length > 0 && (
                 <>
-                 
-                  <a href="/checkout" className="checkout-btn">
+                  <Link href="/checkout" className="checkout-btn">
                     Go Checkout
-                  </a>
+                  </Link>
                   <button className="clear-btn" onClick={clearCart}>
                     Clear Cart
                   </button>
                 </>
               )}
-
             </div>
           )}
 
-          {/* Profile dropdown */}
+          {/* Profile Dropdown */}
           <div className="profile-section" ref={profileRef}>
             <button
               className="profile-btn"
@@ -98,32 +110,50 @@ export default function Navbar() {
 
             {profileOpen && (
               <div className="profile-dropdown">
-                <a href="/profile" className="dropdown-item"><User size={16} /> Profile</a>
-                <a href="#settings" className="dropdown-item"><Settings size={16} /> Settings</a>
+                <Link href="/profile" className="dropdown-item">
+                  <User size={16} /> Profile
+                </Link>
+                <Link href="/settings" className="dropdown-item">
+                  <Settings size={16} /> Settings
+                </Link>
                 <hr />
-                <a href="#logout" className="dropdown-item logout"><LogOut size={16} /> Logout</a>
+                <Link href="/logout" className="dropdown-item logout">
+                  <LogOut size={16} /> Logout
+                </Link>
               </div>
             )}
           </div>
 
-          {/* Mobile Menu */}
-          <button
-            className="menu-toggle"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
+          {/* Mobile Menu Toggle */}
+          <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
       {/* MOBILE MENU */}
-      <nav className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-        <a href="/" className="nav-link active">Home</a>
-        <a href="#about" className="nav-link">About</a>
-        <a href="#services" className="nav-link">Services</a>
-        <a href="#pricing" className="nav-link">Pricing</a>
-        <a href="#contact" className="nav-link">Contact</a>
-      </nav>
+      {menuOpen && (
+        <nav className="mobile-menu open">
+          <Link href="/" className="nav-link active">
+            Home
+          </Link>
+          <Link href="/about" className="nav-link">
+            About
+          </Link>
+          <Link href="/services" className="nav-link">
+            Services
+          </Link>
+          <Link href="/pricing" className="nav-link">
+            Pricing
+          </Link>
+          <Link href="/contact" className="nav-link">
+            Contact
+          </Link>
+          <Link href="/checkout" className="nav-link">
+            Checkout
+          </Link>
+        </nav>
+      )}
     </header>
   );
 }

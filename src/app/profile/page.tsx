@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function ProfilePage() {
-  const [user, setUser] = useState({
+  const [user] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
     avatar: "/profile.png",
