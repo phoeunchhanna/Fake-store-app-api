@@ -16,7 +16,7 @@ export default function ProductShowcase() {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus,
           luctus nec ullamcorper mattis, pulvinar dapibus leo.
         </p>
-        <button className="shop-btn">Shop Now</button>
+        <button className="shop-btn"><span>Shop Now</span></button>
       </div>
 
       {/* RIGHT IMAGE BLOCK */}

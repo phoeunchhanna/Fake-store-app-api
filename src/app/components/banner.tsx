@@ -15,16 +15,16 @@ export default function Banner() {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus,
                         luctus nec ullamcorper mattis, pulvinar dapibus leo.
                     </p>
-                    <button className="shop-btn">SHOP NOW</button>
+                    <button className="shop-btn"><span>SHOP NOW</span></button>
                 </div>
 
                 {/* RIGHT IMAGE SECTION */}
                 <div className="banner-image animated">
                     <Image
                         src="/clother.png"
-                        alt="Golden rings"
+                        alt="Ring collection showcase"
                         width={700}
-                        height={400}
+                        height={500}
                         priority
                     />
                 </div>
@@ -32,25 +32,25 @@ export default function Banner() {
             {/* BRANDING LOGOS */}
             <div className="brand-strip">
                 <div className="brand-card">
-                    <Image src="/men.png" alt="Brand 1" width={50} height={50} />
+                    <Image src="/men.png" alt="Men's Collection" width={50} height={50} />
                 </div>
                 <div className="brand-card">
-                    <Image src="/women.png" alt="Brand 2" width={50} height={50} />
+                    <Image src="/women.png" alt="Women's Collection" width={50} height={50} />
                 </div>
                 <div className="brand-card">
-                    <Image src="/jewelry.png" alt="Brand 3" width={50} height={50} />
+                    <Image src="/jewelry.png" alt="Jewelry Collection" width={50} height={50} />
                 </div>
                 <div className="brand-card">
-                    <Image src="/electronic.png" alt="Brand 4" width={50} height={50} />
+                    <Image src="/electronic.png" alt="Electronics" width={50} height={50} />
                 </div>
                 <div className="brand-card">
-                    <Image src="/shose.png" alt="Brand 4" width={50} height={50} />
+                    <Image src="/shose.png" alt="Shoes" width={50} height={50} />
                 </div>
                 <div className="brand-card">
-                    <Image src="/shose.png" alt="Brand 4" width={50} height={50} />
+                    <Image src="/shose.png" alt="Accessories" width={50} height={50} />
                 </div>
                 <div className="brand-card">
-                    <Image src="/shose.png" alt="Brand 4" width={50} height={50} />
+                    <Image src="/shose.png" alt="Categories" width={50} height={50} />
                 </div>
             </div>
         </section>
