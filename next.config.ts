@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'standalone',
+  // Optimized for Vercel deployment
   images: {
     remotePatterns: [
       {
@@ -17,9 +17,6 @@ const nextConfig: NextConfig = {
         hostname: 'fakestoreapi.in',
       },
     ],
-  },
-  experimental: {
-    // Add valid experimental options here if needed
   },
 };
 
