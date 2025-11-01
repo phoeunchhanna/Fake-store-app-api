@@ -18,9 +18,9 @@ export interface Product {
 }
 /** Props type for Next.js dynamic route */
 interface ProductDetailProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 /** Fetch product safely */
@@ -41,7 +41,7 @@ async function getProduct(id: string): Promise<Product | null> {
 
 /** === PRODUCT PAGE COMPONENT === */
 export default async function ProductPage({ params }: ProductDetailProps) {
-  const { id } = params;
+  const { id } = await params;
   const product = await getProduct(id);
 
   if (!product) {

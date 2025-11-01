@@ -1,15 +1,25 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  output: 'standalone',
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.reactbd.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fakestoreapi.in',
+      },
+    ],
+  },
   experimental: {
     // Add valid experimental options here if needed
-  },
-};
-
-module.exports = {
-  images: {
-    domains: ['fakestoreapi.com', 'fakestoreapi.reactbd.com', 'fakestoreapi.in'],
   },
 };
 

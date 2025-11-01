@@ -26,7 +26,29 @@
 
 ## Getting Started
 
-First, run the development server:
+### Using Docker Desktop (Recommended)
+
+```bash
+# Build and run the container
+docker-compose up --build
+
+# Or run in detached mode
+docker-compose up -d --build
+```
+
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
+
+For detailed Docker instructions, see [DOCKER.md](DOCKER.md)
+
+### Local Development
+
+First, install dependencies:
+
+```bash
+npm install
+```
+
+Then run the development server:
 
 ```bash
 npm run dev
